@@ -1,0 +1,316 @@
+/* ==========================================================================
+   Minimal Modern Navbar - Custom Architectural Direction
+   Zero backgrounds, boxes, pills, cards, borders, or glassmorphism.
+   ========================================================================== */
+
+:root {
+  --nav-fg: #111111;
+  --nav-fg-muted: rgba(17, 17, 17, 0.38);
+  --nav-accent: #050505;
+}
+
+[data-theme='dark'] {
+  --nav-fg: #f5f5f7;
+  --nav-fg-muted: rgba(245, 245, 247, 0.38);
+  --nav-accent: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --nav-fg: #f5f5f7;
+    --nav-fg-muted: rgba(245, 245, 247, 0.38);
+    --nav-accent: #ffffff;
+  }
+}
+
+/* Header container: completely bare, no box, no border, floating */
+.navbar-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: clamp(0.9rem, 1.4vw, 1.5rem); /* Equal distance from top, left, and right of the screen */
+  z-index: 1000;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  pointer-events: none;
+  /* Allows full pass-through clicks outside interactive items */
+}
+
+/* Horizontal alignment axis */
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  position: relative;
+}
+
+/* Fullscreen GLSL shader canvas positioned behind navbar */
+.navbar-shader-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.95;
+  transition: opacity 0.4s ease;
+}
+
+/* Logo container on leftmost side */
+.navbar-logo-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  pointer-events: auto;
+  cursor: pointer;
+  outline: none;
+  will-change: opacity;
+}
+
+/* Prominent, enlarged logo size with balanced aspect ratio */
+.navbar-logo-img {
+  height: clamp(48px, 4.6vw, 64px);
+  width: auto;
+  display: block;
+  object-fit: contain;
+  margin-left: clamp(-14px, -1.5vw, -22px); /* Offsets SVG internal padding */
+  filter: drop-shadow(0 0 0 transparent);
+  transition: opacity 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Theme-switched logo display */
+.logo-dark {
+  display: none;
+}
+
+.logo-light {
+  display: block;
+}
+
+[data-theme='dark'] .logo-dark {
+  display: block;
+}
+
+[data-theme='dark'] .logo-light {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .logo-dark {
+    display: block;
+  }
+
+  :root:not([data-theme='light']) .logo-light {
+    display: none;
+  }
+}
+
+/* Right-side navigation */
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.8rem, 3.4vw, 3.8rem);
+  pointer-events: auto;
+}
+
+.navbar-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: clamp(1.75rem, 3vw, 3.5rem);
+}
+
+.navbar-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Navigation link styling: Plain text editorial typography */
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  text-decoration: none;
+  color: var(--nav-fg);
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(0.88rem, 1.1vw, 1rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  text-transform: none;
+  padding: 0.35rem 0.15rem;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  will-change: opacity;
+  transition: color 0.3s ease;
+}
+
+/* Active link state: kept minimal and clean for upcoming custom GLSL shader */
+.nav-link.is-active {
+  color: var(--nav-fg);
+}
+
+/* Link dual-layer text kinetic track: sliding up animation */
+.nav-link-track {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  height: 1.35em;
+  line-height: 1.35;
+}
+
+.nav-link-text {
+  display: block;
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+.nav-link-text.secondary {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+}
+
+/* Subtle organic index prefix (editorial notation) */
+.nav-link-index {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--nav-fg-muted);
+  margin-right: 0.55rem;
+  opacity: 0.7;
+  display: inline-block;
+  transform: translateY(-0.15em);
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+/* Subtle theme switcher */
+.nav-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0.4rem;
+  cursor: pointer;
+  color: var(--nav-fg-muted);
+  outline: none;
+  transition: color 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+  margin-left: 0.5rem;
+}
+
+.nav-theme-toggle:hover {
+  color: var(--nav-fg);
+  transform: rotate(45deg);
+}
+
+.nav-theme-toggle svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.5;
+}
+
+/* Accessibility focus state without bulky box */
+.nav-link:focus-visible,
+.navbar-logo-link:focus-visible,
+.nav-theme-toggle:focus-visible {
+  outline: 1.5px dotted var(--nav-fg);
+  outline-offset: 4px;
+}
+
+/* Mobile responsive menu */
+.nav-mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--nav-fg);
+  pointer-events: auto;
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .navbar-header {
+    padding: clamp(0.75rem, 3vw, 1rem);
+  }
+
+  .navbar-logo-img {
+    height: clamp(42px, 9vw, 56px);
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 1002;
+  }
+
+  .nav-mobile-toggle span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background-color: var(--nav-fg);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  }
+
+  .nav-mobile-toggle.is-open span:first-child {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+
+  .nav-mobile-toggle.is-open span:last-child {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  .navbar-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 6rem 2.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background: transparent;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-12px);
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .navbar-nav.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .navbar-list {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  .nav-link {
+    font-size: 1.75rem;
+    font-weight: 500;
+  }
+
+  .nav-link-track {
+    height: 1.4em;
+  }
+}

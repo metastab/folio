@@ -1,27 +1,94 @@
-.app {
+.folio-layout {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.folio-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  gap: 1rem;
-  padding: 2rem;
-  text-align: center;
+  padding: clamp(6rem, 12vw, 12rem) clamp(2rem, 5vw, 5rem);
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.app h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  max-width: 920px;
 }
 
-.app p {
-  color: #6b7280;
-  font-size: 1.125rem;
+.hero-eyebrow {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  opacity: 0.8;
 }
 
-@media (prefers-color-scheme: dark) {
-  .app p {
-    color: #9ca3af;
+/* Metastab hero signature logo replacing the headline text */
+.hero-logo-container {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  margin: -0.75rem 0 0.5rem;
+  max-width: 100%;
+}
+
+.hero-logo-img {
+  height: clamp(185px, 22vw, 310px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  transform: scaleX(1.25);
+  transform-origin: left center;
+  margin-left: clamp(-72px, -8vw, -120px); /* Offsets SVG internal whitespace to align flush with text */
+  user-select: none;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hero-subline {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(1rem, 1.25vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--text-muted);
+  max-width: 640px;
+  margin: 0;
+}
+
+/* Accessible screen-reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    gap: 1.25rem;
+  }
+
+  .hero-logo-img {
+    height: clamp(140px, 36vw, 210px);
+    transform: scaleX(1.18);
+    transform-origin: left center;
+    margin-left: clamp(-45px, -11vw, -70px);
   }
 }
