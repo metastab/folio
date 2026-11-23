@@ -1,0 +1,72 @@
+/* ==========================================================================
+   Vinyl Turntable Music Player Styles
+   ========================================================================== */
+
+.vinyl-player-root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1 / 1;
+  user-select: none;
+}
+
+.vinyl-player-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: block;
+}
+
+/* Continuous, slow hypnotic vinyl spin */
+@keyframes vinyl-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.vinyl-disk {
+  transform-origin: 210px 240px;
+  animation: vinyl-spin 22s linear infinite;
+  will-change: transform;
+}
+
+/* Paused state when toggled by user */
+.vinyl-disk.is-paused {
+  animation-play-state: paused;
+}
+
+/* Interactive subtle arm feedback */
+.tonearm-assembly {
+  transform-origin: 390px 115px;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.vinyl-player-root.is-paused .tonearm-assembly {
+  transform: rotate(-18deg);
+}
+
+.vinyl-player-root:hover .vinyl-disk {
+  /* Maintain smooth linear spin */
+  animation-play-state: running;
+}
+
+/* Responsive constraints */
+@media (max-width: 992px) {
+  .vinyl-player-root {
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .vinyl-player-root {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}

@@ -1,24 +1,19 @@
-/* ==========================================================================
-   Minimal Modern Navbar - Custom Architectural Direction
-   Zero backgrounds, boxes, pills, cards, borders, or glassmorphism.
-   ========================================================================== */
-
 :root {
   --nav-fg: #111111;
-  --nav-fg-muted: rgba(17, 17, 17, 0.38);
+  --nav-fg-muted: rgba(17, 17, 17, 0.45);
   --nav-accent: #050505;
 }
 
 [data-theme='dark'] {
   --nav-fg: #f5f5f7;
-  --nav-fg-muted: rgba(245, 245, 247, 0.38);
+  --nav-fg-muted: rgba(245, 245, 247, 0.45);
   --nav-accent: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     --nav-fg: #f5f5f7;
-    --nav-fg-muted: rgba(245, 245, 247, 0.38);
+    --nav-fg-muted: rgba(245, 245, 247, 0.45);
     --nav-accent: #ffffff;
   }
 }
@@ -30,13 +25,12 @@
   left: 0;
   width: 100%;
   box-sizing: border-box;
-  padding: clamp(0.9rem, 1.4vw, 1.5rem); /* Equal distance from top, left, and right of the screen */
+  padding: clamp(0.9rem, 1.4vw, 1.5rem);
   z-index: 1000;
   background: transparent;
   border: none;
   box-shadow: none;
   pointer-events: none;
-  /* Allows full pass-through clicks outside interactive items */
 }
 
 /* Horizontal alignment axis */
@@ -50,19 +44,6 @@
   position: relative;
 }
 
-/* Fullscreen GLSL shader canvas positioned behind navbar */
-.navbar-shader-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.95;
-  transition: opacity 0.4s ease;
-}
-
 /* Logo container on leftmost side */
 .navbar-logo-link {
   display: inline-flex;
@@ -71,7 +52,6 @@
   pointer-events: auto;
   cursor: pointer;
   outline: none;
-  will-change: opacity;
 }
 
 /* Prominent, enlarged logo size with balanced aspect ratio */
@@ -80,9 +60,13 @@
   width: auto;
   display: block;
   object-fit: contain;
-  margin-left: clamp(-14px, -1.5vw, -22px); /* Offsets SVG internal padding */
+  margin-left: clamp(-14px, -1.5vw, -22px);
   filter: drop-shadow(0 0 0 transparent);
-  transition: opacity 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: opacity 0.2s ease;
+}
+
+.navbar-logo-link:hover .navbar-logo-img {
+  opacity: 0.75;
 }
 
 /* Theme-switched logo display */
@@ -112,11 +96,23 @@
   }
 }
 
-/* Right-side navigation */
+/* Right-side navigation actions */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.75rem, 3vw, 3.5rem);
+  pointer-events: auto;
+}
+
+.navbar-controls {
+  display: flex;
+  align-items: center;
+  pointer-events: auto;
+}
+
 .navbar-nav {
   display: flex;
   align-items: center;
-  gap: clamp(1.8rem, 3.4vw, 3.8rem);
   pointer-events: auto;
 }
 
@@ -141,7 +137,7 @@
   display: inline-flex;
   align-items: baseline;
   text-decoration: none;
-  color: var(--nav-fg);
+  color: var(--nav-fg-muted);
   font-family: 'Syne', sans-serif;
   font-size: clamp(0.88rem, 1.1vw, 1rem);
   font-weight: 500;
@@ -151,38 +147,40 @@
   cursor: pointer;
   outline: none;
   user-select: none;
+  transition: color 0.2s ease;
   will-change: opacity;
-  transition: color 0.3s ease;
 }
 
-/* Active link state: kept minimal and clean for upcoming custom GLSL shader */
+.nav-link:hover,
 .nav-link.is-active {
   color: var(--nav-fg);
 }
 
-/* Link dual-layer text kinetic track: sliding up animation */
-.nav-link-track {
+.nav-link-label-wrap {
   position: relative;
-  display: block;
-  overflow: hidden;
-  height: 1.35em;
-  line-height: 1.35;
+  display: inline-flex;
+  align-items: baseline;
 }
 
-.nav-link-text {
-  display: block;
+.nav-link-label {
+  display: inline-block;
   white-space: nowrap;
-  transition: opacity 0.3s ease;
 }
 
-.nav-link-text.secondary {
+/* Dynamic directional hairline underline drawn via GSAP */
+.nav-link-line {
   position: absolute;
-  top: 100%;
+  bottom: -2px;
   left: 0;
   width: 100%;
+  height: 1px;
+  background-color: var(--nav-fg);
+  transform: scaleX(0);
+  pointer-events: none;
+  will-change: transform;
 }
 
-/* Subtle organic index prefix (editorial notation) */
+/* Subtle organic index prefix (editorial notation) - kept dim at all times */
 .nav-link-index {
   font-family: 'Space Grotesk', monospace;
   font-size: 0.65rem;
@@ -190,10 +188,10 @@
   letter-spacing: 0.05em;
   color: var(--nav-fg-muted);
   margin-right: 0.55rem;
-  opacity: 0.7;
+  opacity: 0.55;
   display: inline-block;
   transform: translateY(-0.15em);
-  transition: color 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
 }
 
 /* Subtle theme switcher */
@@ -207,9 +205,9 @@
   cursor: pointer;
   color: var(--nav-fg-muted);
   outline: none;
-  transition: color 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color 0.2s ease, transform 0.25s ease;
   pointer-events: auto;
-  margin-left: 0.5rem;
+  margin: 0;
 }
 
 .nav-theme-toggle:hover {
@@ -252,11 +250,32 @@
     height: clamp(42px, 9vw, 56px);
   }
 
+  .navbar-actions {
+    gap: 0;
+  }
+
+  .navbar-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    z-index: 1002;
+    position: relative;
+  }
+
+  .nav-theme-toggle {
+    display: inline-flex;
+    padding: 0.4rem;
+    color: var(--nav-fg);
+  }
+
   .nav-mobile-toggle {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 5px;
+    padding: 0.4rem;
     z-index: 1002;
+    position: relative;
   }
 
   .nav-mobile-toggle span {
@@ -264,7 +283,7 @@
     width: 22px;
     height: 1.5px;
     background-color: var(--nav-fg);
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    transition: transform 0.25s ease, opacity 0.2s ease;
   }
 
   .nav-mobile-toggle.is-open span:first-child {
@@ -286,11 +305,12 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    background: transparent;
+    background-color: var(--bg-primary);
     opacity: 0;
     pointer-events: none;
     transform: translateY(-12px);
-    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 1001;
   }
 
   .navbar-nav.is-open {
@@ -308,9 +328,5 @@
   .nav-link {
     font-size: 1.75rem;
     font-weight: 500;
-  }
-
-  .nav-link-track {
-    height: 1.4em;
   }
 }
