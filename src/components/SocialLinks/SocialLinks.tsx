@@ -71,8 +71,8 @@ export default function SocialLinks() {
       const eyebrow = document.querySelector('.hero-eyebrow')
       if (eyebrow) {
         const rect = eyebrow.getBoundingClientRect()
-        // Align the top of the first icon glyph with the top of the "Design & Engineering" text
-        setTopPos(Math.round(rect.top - 3))
+        // Keep fixed position anchored to the document top of "Design & Engineering" across scroll/resizes
+        setTopPos(Math.round(rect.top + window.scrollY - 3))
       }
     }
 

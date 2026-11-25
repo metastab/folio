@@ -11,6 +11,15 @@
   max-width: 480px;
   aspect-ratio: 1 / 1;
   user-select: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.vinyl-player-root:focus-visible {
+  outline: 1.5px dotted var(--nav-fg, var(--text-primary));
+  outline-offset: 4px;
+  border-radius: 50%;
 }
 
 .vinyl-player-svg {
@@ -18,6 +27,11 @@
   height: 100%;
   overflow: visible;
   display: block;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vinyl-dock-stage.is-docked .vinyl-player-root:hover .vinyl-player-svg {
+  transform: scale(1.08);
 }
 
 /* Continuous, slow hypnotic vinyl spin */

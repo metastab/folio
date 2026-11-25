@@ -40,8 +40,8 @@ export default function VinylPlayer({ className = '' }: VinylPlayerProps) {
               dx="0"
               dy="16"
               stdDeviation="26"
-              flood-color="#000000"
-              flood-opacity="0.85"
+              floodColor="#000000"
+              floodOpacity="0.85"
             />
           </filter>
 
@@ -51,8 +51,8 @@ export default function VinylPlayer({ className = '' }: VinylPlayerProps) {
               dx="-4"
               dy="7"
               stdDeviation="4.5"
-              flood-color="#000000"
-              flood-opacity="0.7"
+              floodColor="#000000"
+              floodOpacity="0.7"
             />
           </filter>
 

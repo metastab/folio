@@ -1,0 +1,482 @@
+/* ==========================================================================
+   Page 2: About Me Section (230vh+ Runway with Sticky Right Typography)
+   ========================================================================== */
+
+.about-section {
+  position: relative;
+  min-height: 235vh;
+  width: 100%;
+  box-sizing: border-box;
+  /* Extra right clearance keeps typography well clear of social rail & docked mini turntable */
+  padding: clamp(5rem, 8vw, 7.5rem) clamp(7.5rem, 12vw, 11.5rem) clamp(7rem, 12vh, 10rem) clamp(2rem, 5vw, 5rem);
+  max-width: 1520px;
+  margin: 0 auto;
+}
+
+.about-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  /* Stretch columns across the full 235vh+ height so sticky right column stays pinned */
+  align-items: stretch;
+  gap: clamp(3rem, 6vw, 6.5rem);
+  width: 100%;
+}
+
+/* ==========================================
+   ZONE 1 — Left Column: 12-Item Overlapping Collage Track
+   ========================================== */
+.about-collage-col {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.collage-stage {
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  min-height: max(1850px, 215vh);
+}
+
+.collage-frame {
+  position: absolute;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background-color: var(--surface-card);
+  box-shadow: 0 24px 52px -18px rgba(0, 0, 0, 0.58),
+    inset 0 1px 0 var(--card-glow);
+  will-change: transform, opacity;
+  /* Never transition transform/opacity on elements animated by GSAP ScrollTrigger */
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+:root:not([data-theme='dark']) .collage-frame {
+  box-shadow: 0 22px 46px -18px rgba(18, 18, 20, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .collage-frame {
+    box-shadow: 0 24px 52px -18px rgba(0, 0, 0, 0.58),
+      inset 0 1px 0 var(--card-glow);
+  }
+}
+
+.collage-frame:hover {
+  border-color: var(--text-muted);
+}
+
+/* 12 Asymmetrical Overlapping Frame Slots distributed smoothly across 215vh+ */
+.collage-slot-01 {
+  top: 0%;
+  left: 0%;
+  width: 56%;
+  aspect-ratio: 3 / 4;
+  z-index: 1;
+}
+
+.collage-slot-02 {
+  top: 4%;
+  right: 2%;
+  width: 54%;
+  aspect-ratio: 16 / 10;
+  z-index: 2;
+  background-color: var(--surface-card-elevated);
+}
+
+.collage-slot-03 {
+  top: 13%;
+  left: 36%;
+  width: 48%;
+  aspect-ratio: 1 / 1.05;
+  z-index: 3;
+}
+
+.collage-slot-04 {
+  top: 23%;
+  left: 5%;
+  width: 42%;
+  aspect-ratio: 4 / 5;
+  z-index: 4;
+  background-color: var(--surface-card-elevated);
+}
+
+.collage-slot-05 {
+  top: 31%;
+  right: 0%;
+  width: 56%;
+  aspect-ratio: 5 / 4;
+  z-index: 2;
+}
+
+.collage-slot-06 {
+  top: 41%;
+  left: 22%;
+  width: 47%;
+  aspect-ratio: 1 / 1;
+  z-index: 3;
+  background-color: var(--surface-card-elevated);
+}
+
+.collage-slot-07 {
+  top: 50%;
+  left: 0%;
+  width: 53%;
+  aspect-ratio: 3 / 4;
+  z-index: 1;
+}
+
+.collage-slot-08 {
+  top: 57%;
+  right: 3%;
+  width: 55%;
+  aspect-ratio: 16 / 10;
+  z-index: 3;
+  background-color: var(--surface-card-elevated);
+}
+
+.collage-slot-09 {
+  top: 66%;
+  left: 34%;
+  width: 45%;
+  aspect-ratio: 4 / 5;
+  z-index: 2;
+}
+
+.collage-slot-10 {
+  top: 75%;
+  left: 4%;
+  width: 47%;
+  aspect-ratio: 1 / 1.05;
+  z-index: 4;
+  background-color: var(--surface-card-elevated);
+}
+
+.collage-slot-11 {
+  top: 83%;
+  right: 0%;
+  width: 54%;
+  aspect-ratio: 16 / 10;
+  z-index: 2;
+}
+
+.collage-slot-12 {
+  top: 89%;
+  left: 27%;
+  width: 41%;
+  aspect-ratio: 4 / 5;
+  z-index: 3;
+  background-color: var(--surface-card-elevated);
+}
+
+.collage-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(100%) contrast(1.06);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.5s ease;
+}
+
+.collage-frame:hover .collage-media {
+  transform: scale(1.03);
+  filter: grayscale(60%) contrast(1.04);
+}
+
+/* Curated monochrome architectural & generative placeholder motifs */
+.collage-placeholder {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(
+    circle at 30% 25%,
+    var(--surface-card-elevated) 0%,
+    var(--surface-card) 75%
+  );
+}
+
+.collage-placeholder-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  color: var(--text-primary);
+}
+
+@keyframes video-scan-sweep {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(220%);
+  }
+}
+
+.collage-video-sweep {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--card-glow) 50%,
+    transparent 100%
+  );
+  height: 45%;
+  pointer-events: none;
+  animation: video-scan-sweep 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes wave-drift {
+  0%, 100% {
+    transform: translateX(-4%);
+  }
+  50% {
+    transform: translateX(4%);
+  }
+}
+
+.collage-wave-group {
+  animation: wave-drift 6s ease-in-out infinite;
+}
+
+@keyframes topo-pulse {
+  0%, 100% {
+    opacity: 0.28;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.62;
+    transform: scale(1.04);
+  }
+}
+
+.collage-topo-group {
+  transform-origin: center center;
+  animation: topo-pulse 5.2s ease-in-out infinite;
+}
+
+@keyframes orbit-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.collage-orbit-rotator {
+  transform-origin: 50% 50%;
+  animation: orbit-slow 26s linear infinite;
+}
+
+.collage-frame-tag {
+  position: absolute;
+  bottom: 0.65rem;
+  left: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.collage-live-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--text-primary);
+  opacity: 0.75;
+  animation: dot-blink 2s ease-in-out infinite;
+}
+
+@keyframes dot-blink {
+  0%, 100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+/* ==========================================
+   RIGHT COLUMN — Sticky Typography Stack (Zones 2 & 3)
+   ========================================== */
+.about-copy-col {
+  position: relative;
+}
+
+.about-copy-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(2rem, 4vw, 3.25rem);
+  max-width: 560px;
+}
+
+/* Zone 2: Top Right Kinetic Shuffling Headline */
+.about-headline-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.1rem;
+  width: 100%;
+}
+
+.about-eyebrow {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+
+.about-kinetic-headline {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.15rem, 3.6vw, 3.35rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.kinetic-prefix {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Stabilized overflow mask preventing layout shift during phrase swap */
+.kinetic-mask {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  height: 1.24em;
+  width: 100%;
+  vertical-align: bottom;
+}
+
+.kinetic-sizer {
+  visibility: hidden;
+  display: inline-block;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.kinetic-phrase {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  color: var(--text-primary);
+  will-change: transform, opacity;
+}
+
+/* Zone 3: Bottom Right Scroll-Triggered Personal Intro */
+.about-intro-zone {
+  width: 100%;
+  padding-top: clamp(1rem, 2vw, 1.5rem);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.about-intro-copy {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(1.05rem, 1.35vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--text-primary);
+  max-width: 480px;
+  margin: 0;
+}
+
+.intro-word {
+  display: inline;
+  will-change: opacity;
+}
+
+.intro-word-accent {
+  font-weight: 600;
+}
+
+/* ==========================================
+   Responsive Layout
+   Stack Zone 2 + Zone 3 ABOVE Zone 1 on smaller screens
+   ========================================== */
+@media (max-width: 960px) {
+  .about-section {
+    min-height: 215vh;
+    padding: clamp(4.5rem, 10vw, 6.5rem) clamp(4.5rem, 10vw, 6.5rem) clamp(7rem, 14vh, 9rem) clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .about-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3.5rem;
+  }
+
+  .about-copy-col {
+    order: 1;
+    width: 100%;
+  }
+
+  .about-copy-sticky {
+    position: relative;
+    top: auto;
+    height: auto;
+    max-width: 100%;
+    gap: 2rem;
+  }
+
+  .about-collage-col {
+    order: 2;
+    justify-content: center;
+  }
+
+  .collage-stage {
+    max-width: 440px;
+    min-height: max(1680px, 195vh);
+  }
+}
+
+@media (max-width: 768px) {
+  .about-section {
+    min-height: 225vh;
+    padding: clamp(4.5rem, 12vw, 5.5rem) clamp(3.5rem, 11vw, 4.5rem) clamp(7rem, 15vh, 8.5rem) clamp(1.25rem, 4vw, 2rem);
+  }
+
+  .about-inner {
+    gap: 3rem;
+  }
+
+  .about-kinetic-headline {
+    font-size: clamp(1.9rem, 7.5vw, 2.5rem);
+  }
+
+  .about-intro-copy {
+    font-size: clamp(1rem, 4vw, 1.15rem);
+  }
+
+  .collage-stage {
+    max-width: 340px;
+    min-height: max(1580px, 190vh);
+  }
+}
